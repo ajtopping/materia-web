@@ -20,7 +20,10 @@ var node1 = new Vue({
   },
   methods: {
     hello: function() {
-      this.x += 10;
+      iDragDropHandler.addToSelection(this);
+    },
+    bye: function() {
+      
     }
   }
 })

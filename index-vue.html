@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <script src="JS/vue/vue.js"></script>
-    
+    <script src="JS/dragdrop_handler.js"></script>
+
     <title>Vue</title>
   </head>
-  <body>
-  	<div id="graph" style="background-color:gray; display:block; ">
-  		<div id="node1" :style="updatedStyle" @mousemove="hello"></div>
+  <body style="background-color:gray">
+  	<div id="graph" style="background-color:darkgray; display:block; ">
+  		<div id="node1" :style="updatedStyle" @mousedown="hello"></div>
   	</div>
     <div id="apple">
     	{{ message }}
