@@ -26,13 +26,19 @@ var iDragDropHandler = {
     this.mousemoveY = e.clientY;
 
     for (selected of this.selection) {
-      selected.x = this.mousemoveX;
-      selected.y = this.mousemoveY;
+      selected.ref.x = this.mousemoveX - selected.offset.x;
+      selected.ref.y = this.mousemoveY - selected.offset.y;
     }
   },
 
   addToSelection : function(vue_ref) {
-    this.selection.push(vue_ref);
+    this.selection.push( {
+      ref: vue_ref,
+      offset: {
+        x: (this.mousemoveX - vue_ref.x),
+        y: (this.mousemoveY - vue_ref.y),
+      },
+    });
   },
 
   clearSelection : function(e) {

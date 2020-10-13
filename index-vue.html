@@ -9,15 +9,21 @@
   </head>
   <body style="background-color:gray">
   	<div id="graph" style="background-color:darkgray; display:block; ">
-  		<div id="node1" :style="updatedStyle" @mousedown="hello"></div>
+  		<div id="node1" :style="updatedStyle" @mousedown="hello">
+  			<div >node1</div>
+  		</div>
   	</div>
     <div id="apple">
     	{{ message }}
+    </div>
+    <div>
+    	<node-component id="node2"></node-component>
     </div>
 
     
 
     <script src="JS/message.js"></script>
 	<script src="JS/node_template.js"></script>
+	<script src="JS/index.js"></script>
   </body>
 </html>
