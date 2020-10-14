@@ -5,17 +5,19 @@ Vue.component( 'node-component', {
       y: 0,
       color: "blue",
       inputs: [
-        { name: "inputA"},
-        { name: "inputB"},
-        { name: "inputC"},
+        { name: "in-A"},
+        { name: "in-B"},
+        { name: "in-C"},
       ],
       outputs: [
-        { name: "outputA"},
-        { name: "outputB"},
+        { name: "out-A"},
+        { name: "out-B"},
       ]
     }
   },
-  props: ['color'],
+  props: {
+    color: String,
+  },
   template: '<div :style="updatedStyle">\
   <node-input-component v-for="(input, index) in inputs" v-bind:index="index" v-bind:name="input.name">\
   </node-input-component>\
@@ -31,17 +33,49 @@ Vue.component( 'node-component', {
 });
 
 Vue.component( 'node-input-component', {
+  data: function() {
+    return {
+      x: 0,
+      y: 0,
+    }
+  },
   props: ['index', 'name'],
-  template: '<div class="node-row-frame">\
-    <span class="node-input-pin" style="background-color:orange">🟠</span>\
-    <span>node-input-component #{{ index }} "{{ name }}"</span>\
+  template: '<div class="node-row-frame" style="float:left; clear:both">\
+    <span class="node-input-pin" style="background-color:orange;" @mousedown="startConnection" @mosueup="endConnection">🟠</span>\
+    <span>{{ name }}</span>\
   </div>',
+  methods: {
+    startConnection: function(e) {
+        overlayConnectionRenderer.startConnection(this);
+        e.stopPropagation();
+    },
+    endConnection: function(e) {
+        overlayConnectionRenderer.endConnection(this);
+        e.stopPropagation();
+    },
+  }
 });
 
 Vue.component( 'node-output-component', {
+  data: function() {
+    return {
+      x: 50,
+      y: 50,
+    }
+  },
   props: ['index', 'name'],
-  template: '<div class="node-row-frame">\
-    <span>node-output-component #{{ index }} "{{ name }}"</span>\
-    <span class="node-input-pin" style="background-color:cyan">🟦</span>\
+  template: '<div class="node-row-frame" style="float:right; clear:both">\
+    <span>{{ name }}</span>\
+    <span class="node-input-pin" style="background-color:cyan" @mousedown="startConnection" @mouseup="endConnection">🟦</span>\
   </div>',
+  methods: {
+    startConnection: function(e) {
+        overlayConnectionRenderer.startConnection(this);
+        e.stopPropagation();
+    },
+    endConnection: function(e) {
+        overlayConnectionRenderer.endConnection(this);
+        e.stopPropagation();
+    },
+  }
 });

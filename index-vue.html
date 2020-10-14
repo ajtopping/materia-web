@@ -4,13 +4,15 @@
     <meta charset="UTF-8" />
     <script src="JS/vue/vue.js"></script>
     <script src="JS/dragdrop_handler.js"></script>
-
+    <script src="JS/overlay_connection_renderer.js"></script>
+    
     <title>Vue</title>
   </head>
   <body style="background-color:gray">
+  	<canvas id="overlay-canvas" width="200" height="100"></canvas>
   	<div id="graph" style="background-color:darkgray; display:block; ">
   		<div id="node1" :style="updatedStyle" @mousedown="hello">
-  			<div >node1</div>
+  			<node-component id="node1-component"></node-component>
   		</div>
   	</div>
     <div id="apple">

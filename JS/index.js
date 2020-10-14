@@ -14,7 +14,7 @@ var node1 = new Vue({
   },
   computed: {
     updatedStyle: function() {
-      let style = "scrollbar-width: thin; overflow-x:scroll; position:absolute; width:100px; height:100px;";
+      let style = "user-select: none; display: inline-block; scrollbar-width: thin; position:absolute; width:100px;";
       return style + "left:" + this.x + "px;top:" + this.y + "px;background-color:" + this.color + ";";
     }
   },
@@ -32,6 +32,12 @@ var node2 = new Vue({
   el: '#node2',
   
 })
+
+var c = document.getElementById("overlay-canvas");
+var ctx = c.getContext("2d");
+ctx.moveTo(0, 0);
+ctx.lineTo(200, 100);
+ctx.stroke();
 
 function newNode()
 {
