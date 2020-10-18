@@ -33,7 +33,7 @@ var node2 = new Vue({
   
 })
 
-var c = document.getElementById("overlay-canvas");
+var c = document.getElementById("passive-overlay-canvas");
 var ctx = c.getContext("2d");
 ctx.moveTo(0, 0);
 ctx.lineTo(200, 100);

@@ -47,13 +47,8 @@ var iDragDropHandler = {
 }
 
 function init_handler() {
-  if (window.Event) {
-    document.captureEvents(Event.MOUSEUP);
-    document.captureEvents(Event.MOUSEDOWN);
-    document.captureEvents(Event.MOUSEMOVE);
-  }
-  document.onmouseup = e => iDragDropHandler.updateMouseup(e);
-  document.onmousedown = e => iDragDropHandler.updateMousedown(e);
-  document.onmousemove = e => iDragDropHandler.updateMousemove(e);
+  document.addEventListener("mouseup", e => iDragDropHandler.updateMouseup(e));
+  document.addEventListener("mousedown", e => iDragDropHandler.updateMousedown(e));
+  document.addEventListener("mousemove", e => iDragDropHandler.updateMousemove(e));
 }
 

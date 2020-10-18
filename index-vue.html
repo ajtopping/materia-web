@@ -9,7 +9,8 @@
     <title>Vue</title>
   </head>
   <body style="background-color:gray">
-  	<canvas id="overlay-canvas" width="200" height="100"></canvas>
+  	<canvas id="passive-overlay-canvas" width="200" height="100"></canvas>
+  	<canvas id="active-overlay-canvas" width="200" height="100"></canvas>
   	<div id="graph" style="background-color:darkgray; display:block; ">
   		<div id="node1" :style="updatedStyle" @mousedown="hello">
   			<node-component id="node1-component"></node-component>
@@ -27,5 +28,6 @@
     <script src="JS/message.js"></script>
 	<script src="JS/node_template.js"></script>
 	<script src="JS/index.js"></script>
+	<script src="JS/init_overlay_canvas.js"></script>
   </body>
 </html>
