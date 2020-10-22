@@ -1,5 +1,3 @@
-window.onload = init_handler;
-
 var iDragDropHandler = {
   mousedownX : 0,
   mousedownY : 0,
@@ -51,4 +49,6 @@ function init_handler() {
   document.addEventListener("mousedown", e => iDragDropHandler.updateMousedown(e));
   document.addEventListener("mousemove", e => iDragDropHandler.updateMousemove(e));
 }
+
+__DocumentOnloadHandler.AddFunction( init_handler );
 

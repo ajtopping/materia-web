@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <script src="JS/vue/vue.js"></script>
+
+    <script src="JS/document_onload_handler.js"></script>
+
     <script src="JS/dragdrop_handler.js"></script>
     <script src="JS/overlay_connection_renderer.js"></script>
     
@@ -11,6 +14,7 @@
   <body style="background-color:gray">
   	<canvas id="passive-overlay-canvas" width="200" height="100"></canvas>
   	<canvas id="active-overlay-canvas" width="200" height="100"></canvas>
+  	<button onclick="overlayConnectionRenderer.renderConnections()"> Render connection </button>
   	<div id="graph" style="background-color:darkgray; display:block; ">
   		<div id="node1" :style="updatedStyle" @mousedown="hello">
   			<node-component id="node1-component"></node-component>
@@ -21,6 +25,9 @@
     </div>
     <div>
     	<node-component id="node2"></node-component>
+    </div>
+    <div style="background-color: darkgray; width:400px; height:400px">
+    	<dragdrop-overlay-box id="node3"></dragdrop-overlay-box>
     </div>
 
     

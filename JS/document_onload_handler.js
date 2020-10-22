@@ -1,19 +1,20 @@
-var __DocumentOnLoadHandler = {
+var __DocumentOnloadHandler = {
 	onload_functions_ : [],
 
 	AddFunction : function( func ) {
 		if ( ! this.isFunction_( func ) ) {
-			throw "__DocumentOnLoadHandler.AddFunction( func ) : func is not a function."
+			throw "__DocumentOnloadHandler.AddFunction( func ) : func is not a function."
 		}
 
 		if ( func.length !== 0 ) {
-			throw "__DocumentOnLoadHandler.AddFunction( func ) : func must have 0 parameters."
+			throw "__DocumentOnloadHandler.AddFunction( func ) : func must have 0 parameters."
 		}
 
-		onload_functions_.push( func );
+		this.onload_functions_.push( func );
 	},
 
 	CallFunctions : function() {
+		console.log("__DocumentOnloadHandler : Calling " + this.onload_functions_.length + " functions...");
 		for ( func of this.onload_functions_ ) {
 			func.call();
 		}
@@ -26,5 +27,5 @@ var __DocumentOnLoadHandler = {
 }
 
 window.onload = () => {
-	__DocumentOnLoadHandler.CallFunctions();
+	__DocumentOnloadHandler.CallFunctions();
 }

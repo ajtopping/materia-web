@@ -33,6 +33,11 @@ var node2 = new Vue({
   
 })
 
+var node3 = new Vue({
+  el: '#node3',
+  
+})
+
 var c = document.getElementById("passive-overlay-canvas");
 var ctx = c.getContext("2d");
 ctx.moveTo(0, 0);

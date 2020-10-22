@@ -1,9 +1,6 @@
 //window.onload = init_handler;
 
 var overlayConnectionRenderer = {
-  canvas : document.getElementById("overlay-canvas"),
-  //context : this.canvas.getContext("2d"),
-
   temp_start_vue_ref : {},
   temp_end_vue_ref : {},
   start_xy : {x:0,y:0},
@@ -12,24 +9,31 @@ var overlayConnectionRenderer = {
   // { input:vue_ref , output:vue_ref}
   connections : [],
 
-  test : function(input) {
-    window.alert(input);
+  init_members: function() {
+    this.passive_canvas_ = document.getElementById("passive-overlay-canvas");
+    this.active_canvas_ = document.getElementById("active-overlay-canvas");
+    this.passive_context_ = this.passive_canvas_.getContext("2d");
+    this.active_context_ = this.active_canvas_.getContext("2d");
   },
 
   renderInProgressConnection: function(event) {
-    let context = document.getElementById("active-overlay-canvas").getContext("2d");
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.beginPath();
+    this.active_context_.clearRect(0, 0, this.active_canvas_.width, this.active_canvas_.height);
+    this.active_context_.beginPath();
     
     if (this.temp_start_vue_ref.x) {
-      context.moveTo(event.clientX, event.clientY);
-      context.lineTo(this.temp_start_vue_ref.x, this.temp_start_vue_ref.y);
-      context.stroke();
+      this.active_context_.moveTo(event.clientX, event.clientY);
+      this.active_context_.lineTo(this.temp_start_vue_ref.x, this.temp_start_vue_ref.y);
+      this.active_context_.stroke();
     }
   },
 
   renderConnections: function(context) {
+    if (!context) {
+      context = this.passive_context_;
+    }
+
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.beginPath();
 
     for (connection of this.connections) {
       var ox = connection.output.x;
@@ -52,6 +56,8 @@ var overlayConnectionRenderer = {
   },
 
   endConnection: function(ending_vue_ref) {
+    window.alert(ending_vue_ref.$parent.$parent.x);
+
     this.temp_end_vue_ref = ending_vue_ref
 
     this.addConnection(this.temp_start_vue_ref, this.temp_end_vue_ref);
@@ -72,9 +78,10 @@ var overlayConnectionRenderer = {
 }
 
 function init_overlay_handler() {
+  overlayConnectionRenderer.init_members();
   document.addEventListener("mousemove", e => overlayConnectionRenderer.renderInProgressConnection(e));
   document.addEventListener("mouseup", () => overlayConnectionRenderer.clearTempRefs());
 }
 
-init_overlay_handler();
+__DocumentOnloadHandler.AddFunction(init_overlay_handler);
 

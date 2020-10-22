@@ -1,3 +1,32 @@
+// A div with an absolute css position that can be dragged and dropped
+Vue.component( 'dragdrop-overlay-box', {
+  data: function () {
+    return {
+      x: 0,
+      y: 0,
+      color: "green",
+    }
+  },
+  computed: {
+    updatedStyle: function() {
+      let style = "user-select: none; display: inline-block; scrollbar-width: thin; width:100px;";
+      return style + "transform: translate(" + this.x + "px," + this.y + "px); background-color:" + this.color + ";";
+    }
+  },
+  methods: {
+    hello: function() {
+      iDragDropHandler.addToSelection(this);
+    },
+    bye: function() {
+      
+    }
+  },
+  template: '<div :style="updatedStyle" @mousedown="hello">\
+  {{x}}, {{y}}\
+  </div>',
+});
+
+// A container for node inputs and outputs
 Vue.component( 'node-component', {
   data: function () {
     return {

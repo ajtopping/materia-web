@@ -1,5 +1,3 @@
-//window.onload = init_overlay_canvas_interval;
-
 function init_overlay_canvas_interval () {
   var canvas = document.getElementById("passive-overlay-canvas");
   var context = canvas.getContext("2d");
@@ -9,4 +7,4 @@ function init_overlay_canvas_interval () {
     }, 2000, context);
 };
 
-//init_overlay_canvas_interval();
+//__DocumentOnloadHandler.AddFunction(init_overlay_canvas_interval);
