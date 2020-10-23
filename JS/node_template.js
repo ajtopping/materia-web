@@ -1,5 +1,5 @@
-// A div with an absolute css position that can be dragged and dropped
-Vue.component( 'dragdrop-overlay-box', {
+// A div with clipped boundaries that allows for camera panning
+Vue.component( 'panning-overlay-box', {
   data: function () {
     return {
       x: 0,
@@ -9,8 +9,9 @@ Vue.component( 'dragdrop-overlay-box', {
   },
   computed: {
     updatedStyle: function() {
-      let style = "user-select: none; display: inline-block; scrollbar-width: thin; width:100px;";
-      return style + "transform: translate(" + this.x + "px," + this.y + "px); background-color:" + this.color + ";";
+      // display: relative // necessary for clipping?
+      let style = "position: absolute; user-select: none; display: relative; scrollbar-width: thin; width:100px;";
+      return style + "transform: translate(" + this.x + "px," + this.y + "px); ";
     }
   },
   methods: {
@@ -22,6 +23,35 @@ Vue.component( 'dragdrop-overlay-box', {
     }
   },
   template: '<div :style="updatedStyle" @mousedown="hello">\
+  {{x}}, {{y}}, <slot></slot>\
+  </div>',
+});
+
+// A div with an absolute css position that can be dragged and dropped
+Vue.component( 'dragdrop-overlay-box', {
+  data: function () {
+    return {
+      x: 0,
+      y: 100,
+      color: "green",
+    }
+  },
+  computed: {
+    updatedStyle: function() {
+      let style = "border-style: dotted; position: relative; user-select: none; display: inline-block; scrollbar-width: thin; width:100px;";
+      return style + "transform: translate3d(" + this.x + "px," + this.y + "px, 0px); background-color:" + this.color + ";";
+    }
+  },
+  methods: {
+    hello2: function(e) {
+      iDragDropHandler.addToSelection(this);
+      e.stopPropagation();
+    },
+    bye: function() {
+      
+    }
+  },
+  template: '<div :style="updatedStyle" @mousedown="hello2">\
   {{x}}, {{y}}\
   </div>',
 });

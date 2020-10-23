@@ -33,10 +33,24 @@ var node2 = new Vue({
   
 })
 
+var node3_parent_parent = new Vue({
+  el: '#node3-parent-parent',
+  
+})
+
+var node4 = new Vue({
+  el: '#node4',
+  
+})
+/*
 var node3 = new Vue({
   el: '#node3',
   
-})
+})*/
+
+
+
+
 
 var c = document.getElementById("passive-overlay-canvas");
 var ctx = c.getContext("2d");

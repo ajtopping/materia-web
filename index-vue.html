@@ -24,12 +24,15 @@
     	{{ message }}
     </div>
     <div>
-    	<node-component id="node2"></node-component>
+    	<!--node-component id="node2"></node-component-->
     </div>
-    <div style="background-color: darkgray; width:400px; height:400px">
-    	<dragdrop-overlay-box id="node3"></dragdrop-overlay-box>
-    </div>
-
+    <div id="node3-parent-parent">
+	    <panning-overlay-box id="node3-parent" style="border-style: dotted; position: absolute; width:100px; height:400px; ">
+	    	<dragdrop-overlay-box id="node3" style="width:100px; height:100px"></dragdrop-overlay-box>
+	    </panning-overlay-box>
+	</div>
+    <div> Node4 below </div>
+	<dragdrop-overlay-box id="node4" style="width:100px; height:100px"></dragdrop-overlay-box>
     
 
     <script src="JS/message.js"></script>
