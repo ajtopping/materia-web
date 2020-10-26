@@ -11,6 +11,8 @@ Vue.component( 'panning-overlay-box', {
     updatedStyle: function() {
       // display: relative // necessary for clipping?
       let style = "position: absolute; user-select: none; display: relative; scrollbar-width: thin; width:100px;";
+      
+      style += ""
       return style + "transform: translate(" + this.x + "px," + this.y + "px); ";
     }
   },
@@ -23,7 +25,7 @@ Vue.component( 'panning-overlay-box', {
     }
   },
   template: '<div :style="updatedStyle" @mousedown="hello">\
-  {{x}}, {{y}}, <slot></slot>\
+  <slot></slot>\
   </div>',
 });
 
@@ -38,7 +40,7 @@ Vue.component( 'dragdrop-overlay-box', {
   },
   computed: {
     updatedStyle: function() {
-      let style = "border-style: dotted; position: relative; user-select: none; display: inline-block; scrollbar-width: thin; width:100px;";
+      let style = "border-style: dotted; user-select: none; display: inline-block; scrollbar-width: thin; width:100px;";
       return style + "transform: translate3d(" + this.x + "px," + this.y + "px, 0px); background-color:" + this.color + ";";
     }
   },
