@@ -10,9 +10,10 @@ Vue.component( 'panning-overlay-box', {
   computed: {
     updatedStyle: function() {
       // display: relative // necessary for clipping?
-      let style = "position: absolute; user-select: none; display: relative; scrollbar-width: thin; width:100px;";
+      let style = "position: fixed; user-select: none; display: relative; scrollbar-width: thin; width:100px;";
       
       style += ""
+      //return style + "left:" + this.x + "px; top:" + this.y + "px; ";
       return style + "transform: translate(" + this.x + "px," + this.y + "px); ";
     }
   },

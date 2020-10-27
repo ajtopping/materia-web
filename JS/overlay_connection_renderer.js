@@ -19,10 +19,28 @@ var overlayConnectionRenderer = {
   renderInProgressConnection: function(event) {
     this.active_context_.clearRect(0, 0, this.active_canvas_.width, this.active_canvas_.height);
     this.active_context_.beginPath();
-    
+
     if (this.temp_start_vue_ref.x) {
-      this.active_context_.moveTo(event.clientX, event.clientY);
-      this.active_context_.lineTo(this.temp_start_vue_ref.x, this.temp_start_vue_ref.y);
+      let vue_ref_rect = this.temp_start_vue_ref.$el.getBoundingClientRect();
+      let vue_ref_transform = {
+        x : vue_ref_rect.x,
+        y : vue_ref_rect.y,
+      }
+
+      let active_canvas_rect = this.active_canvas_.getBoundingClientRect();
+      let active_canvas_transform = {
+        sX : active_canvas_rect.width / window.innerWidth,
+        sY : active_canvas_rect.height / window.innerHeight,
+      }
+
+      let end_x = event.clientX * active_canvas_transform.sX;
+      let end_y = event.clientY * active_canvas_transform.sY;
+
+      let start_x = vue_ref_transform.x * active_canvas_transform.sX;
+      let start_y = vue_ref_transform.y * active_canvas_transform.sY;
+
+      this.active_context_.moveTo(start_x, start_y);
+      this.active_context_.lineTo(end_x, end_y);
       this.active_context_.stroke();
     }
   },
