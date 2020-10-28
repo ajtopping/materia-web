@@ -1,10 +1,8 @@
 //window.onload = init_handler;
 
 var overlayConnectionRenderer = {
-  temp_start_vue_ref : {},
-  temp_end_vue_ref : {},
-  start_xy : {x:0,y:0},
-  end_xy : {x:0,y:0},
+  temp_start_vue_ref : null,
+  temp_end_vue_ref : null,
 
   // { input:vue_ref , output:vue_ref}
   connections : [],
@@ -16,31 +14,50 @@ var overlayConnectionRenderer = {
     this.active_context_ = this.active_canvas_.getContext("2d");
   },
 
+  // Converts window coordinates to the exact same position but relative to a DOM element
+  clientCoordsToElementSpace: function( xy, element ) {
+    let el_rect = element.getBoundingClientRect();
+
+    return {
+      x: xy.x - el_rect.x,
+      y: xy.y - el_rect.y,
+    }
+  },
+
+  // Scales window coordinates for placing within a DOM element (like a minimap)
+  clientCoordsToMinimapElementSpace: function( xy, element ) {
+    let el_rect = element.getBoundingClientRect();
+    let el_transform = {
+      sX : element.width / window.innerWidth,
+      sY : element.height / window.innerHeight,
+    }
+
+    return {
+      x: xy.x * el_transform.sX,
+      y: xy.y * el_transform.sY,
+    }
+  },
+
   renderInProgressConnection: function(event) {
     this.active_context_.clearRect(0, 0, this.active_canvas_.width, this.active_canvas_.height);
     this.active_context_.beginPath();
 
-    if (this.temp_start_vue_ref.x) {
+    if (this.temp_start_vue_ref) {
       let vue_ref_rect = this.temp_start_vue_ref.$el.getBoundingClientRect();
       let vue_ref_transform = {
         x : vue_ref_rect.x,
         y : vue_ref_rect.y,
       }
 
-      let active_canvas_rect = this.active_canvas_.getBoundingClientRect();
-      let active_canvas_transform = {
-        sX : active_canvas_rect.width / window.innerWidth,
-        sY : active_canvas_rect.height / window.innerHeight,
+      let mouse_xy = {
+        x: event.clientX,
+        y: event.clientY,
       }
+      let start_xy = this.clientCoordsToElementSpace( vue_ref_transform, this.active_canvas_);
+      let end_xy = this.clientCoordsToElementSpace( mouse_xy, this.active_canvas_);
 
-      let end_x = event.clientX * active_canvas_transform.sX;
-      let end_y = event.clientY * active_canvas_transform.sY;
-
-      let start_x = vue_ref_transform.x * active_canvas_transform.sX;
-      let start_y = vue_ref_transform.y * active_canvas_transform.sY;
-
-      this.active_context_.moveTo(start_x, start_y);
-      this.active_context_.lineTo(end_x, end_y);
+      this.active_context_.moveTo(start_xy.x, start_xy.y);
+      this.active_context_.lineTo(end_xy.x, end_xy.y);
       this.active_context_.stroke();
     }
   },
@@ -54,19 +71,30 @@ var overlayConnectionRenderer = {
     context.beginPath();
 
     for (connection of this.connections) {
-      var ox = connection.output.x;
-      var oy = connection.output.y;
-      var ix = connection.input.x;
-      var iy = connection.input.y; 
-      context.moveTo(ox, oy);
-      context.lineTo(ix, iy);
+      let vue_output_rect = connection.output.$el.getBoundingClientRect();
+      let vue_output_transform = {
+        x : vue_output_rect.x,
+        y : vue_output_rect.y,
+      }
+
+      let vue_input_rect = connection.input.$el.getBoundingClientRect();
+      let vue_input_transform = {
+        x : vue_input_rect.x,
+        y : vue_input_rect.y,
+      }
+
+      let output_xy = this.clientCoordsToMinimapElementSpace( vue_output_transform, this.passive_canvas_);
+      let input_xy = this.clientCoordsToMinimapElementSpace( vue_input_transform, this.passive_canvas_);
+
+      context.moveTo(output_xy.x, output_xy.y);
+      context.lineTo(input_xy.x, input_xy.y);
       context.stroke();
     }
   },
 
   clearTempRefs: function() {
-    this.temp_start_vue_ref = {};
-    this.temp_end_vue_ref = {};
+    this.temp_start_vue_ref = null;
+    this.temp_end_vue_ref = null;
   },
 
   startConnection: function(starting_vue_ref) {
@@ -74,7 +102,6 @@ var overlayConnectionRenderer = {
   },
 
   endConnection: function(ending_vue_ref) {
-    window.alert(ending_vue_ref.$parent.$parent.x);
 
     this.temp_end_vue_ref = ending_vue_ref
 

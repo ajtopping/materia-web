@@ -13,11 +13,14 @@
   </head>
   <body style="background-color:gray">
   	<canvas id="passive-overlay-canvas" width="200" height="100"></canvas>
-  	<canvas id="active-overlay-canvas" width="200" height="100"></canvas>
+  	<canvas id="active-overlay-canvas" width="400" height="200" style="position:relative;z-index:1400;pointer-events: none"></canvas>
   	<button onclick="overlayConnectionRenderer.renderConnections()"> Render connection </button>
   	<div id="graph" style="background-color:darkgray; display:block; ">
   		<div id="node1" :style="updatedStyle" @mousedown="hello">
   			<node-component id="node1-component"></node-component>
+  		</div>
+  		<div id="node2" :style="updatedStyle" @mousedown="hello">
+  			<node-component id="node2-component"></node-component>
   		</div>
   	</div>
     <div id="apple">
