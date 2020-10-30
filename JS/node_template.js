@@ -97,13 +97,13 @@ Vue.component( 'node-component', {
 Vue.component( 'node-input-component', {
   data: function() {
     return {
-      x: 10,
-      y: 10,
+      x: 0,
+      y: 0,
     }
   },
   props: ['index', 'name'],
   template: '<div class="node-row-frame" style="float:left; clear:both">\
-    <span class="node-input-pin" style="background-color:orange;" @mousedown="startConnection" @mosueup="endConnection">🟠</span>\
+    <span class="node-input-pin" style="background-color:orange;" @mousedown="startConnection" @mouseup="endConnection">🟠</span>\
     <span>{{ name }}</span>\
   </div>',
   methods: {
@@ -121,8 +121,8 @@ Vue.component( 'node-input-component', {
 Vue.component( 'node-output-component', {
   data: function() {
     return {
-      x: 50,
-      y: 50,
+      x: 0,
+      y: 0,
     }
   },
   props: ['index', 'name'],

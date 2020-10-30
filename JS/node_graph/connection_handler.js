@@ -1,66 +1,35 @@
 //window.onload = init_handler;
 
-var overlayConnectionRenderer = {
-  temp_start_vue_ref : null,
-  temp_end_vue_ref : null,
+var __NodeGraphConnectionManager = {
+  temp_mousedown_vue_obj : null,
+  temp_mouseup_vue_obj : null,
 
   // { input:vue_ref , output:vue_ref}
-  connections : [],
+  connections_ : [],
+  endVueToStartVueMap : {},
 
-  init_members: function() {
-    this.passive_canvas_ = document.getElementById("passive-overlay-canvas");
-    this.active_canvas_ = document.getElementById("active-overlay-canvas");
-    this.passive_context_ = this.passive_canvas_.getContext("2d");
-    this.active_context_ = this.active_canvas_.getContext("2d");
+  AttemptMakeConnectionFromVueObjects: function ( vueA, vueB ) {
+
   },
 
-  // Converts window coordinates to the exact same position but relative to a DOM element
-  clientCoordsToElementSpace: function( xy, element ) {
-    let el_rect = element.getBoundingClientRect();
+  RemoveConnection: function ( vueA, vueB ) {
 
-    return {
-      x: xy.x - el_rect.x,
-      y: xy.y - el_rect.y,
-    }
   },
 
-  // Scales window coordinates for placing within a DOM element (like a minimap)
-  clientCoordsToMinimapElementSpace: function( xy, element ) {
-    let el_rect = element.getBoundingClientRect();
-    let el_transform = {
-      sX : element.width / window.innerWidth,
-      sY : element.height / window.innerHeight,
-    }
+  identifyAndPackageIntoInputOutputPair_: function ( vueA, vueB ) {
 
-    return {
-      x: xy.x * el_transform.sX,
-      y: xy.y * el_transform.sY,
-    }
   },
 
-  renderInProgressConnection: function(event) {
-    this.active_context_.clearRect(0, 0, this.active_canvas_.width, this.active_canvas_.height);
-    this.active_context_.beginPath();
-
-    if (this.temp_start_vue_ref) {
-      let vue_ref_rect = this.temp_start_vue_ref.$el.getBoundingClientRect();
-      let vue_ref_transform = {
-        x : vue_ref_rect.x,
-        y : vue_ref_rect.y,
-      }
-
-      let mouse_xy = {
-        x: event.clientX,
-        y: event.clientY,
-      }
-      let start_xy = this.clientCoordsToElementSpace( vue_ref_transform, this.active_canvas_);
-      let end_xy = this.clientCoordsToElementSpace( mouse_xy, this.active_canvas_);
-
-      this.active_context_.moveTo(start_xy.x, start_xy.y);
-      this.active_context_.lineTo(end_xy.x, end_xy.y);
-      this.active_context_.stroke();
-    }
+  isCyclic_: function ( ioPair ) {
+    // temporarily erase previous output connection before checking?
   },
+
+  MakeSafeConnection_: function ( ioPair ) {
+    // remove old connection that may now be illegal (an input can only have one connection into it)
+
+
+  },
+
 
   renderConnections: function(context) {
     if (!context) {
