@@ -1,7 +1,7 @@
 // A Calculator will always output data of the same size and type
 
 class ValueNumber {
-  a_;
+  value_ = 0.0;
 
   profile_ = {
     in:[],
@@ -15,6 +15,6 @@ class ValueNumber {
   }
 
   value() {
-    return a_;
+    return value_;
   }
 }
