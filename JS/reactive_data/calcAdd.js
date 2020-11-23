@@ -3,7 +3,8 @@
 class CalculatorSum {
  profile_ = {
     in:[
-    'Array number',
+    'number',
+    'number',
     ],
     out:[
     'number',
@@ -14,7 +15,7 @@ class CalculatorSum {
 
   }
 
-  calculate( arr ) {
-    return arr.reduce( (a,b) => a+b );
+  calculate( a, b ) {
+    return a+b;
   }
 }

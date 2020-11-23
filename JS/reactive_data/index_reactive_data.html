@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="uuid.js"></script>
+    <script src="../types.js"></script>
+
+    <script src="data_dictionary.js"></script>
+    <script src="node/NodeFactory.js"></script>
+    <script src="node/Add.js"></script>
+    <script src="node/Sum.js"></script>
+    <script src="node/Ngon.js"></script>
+    <script src="node/EdgeLoop.js"></script>
+    <script src="node/RenderEdgeSet.js"></script>
+    <script src="node/ApplyTransform.js"></script>
+
+    <script src="node.js"></script>
+
+    <script>
+      var RenderCanvas = function() {
+        let canvas = document.getElementById('debug-canvas');
+        let ctx = canvas.getContext("2d");
+
+        ctx.clearRect(0,0, canvas.width, canvas.height);
+        ctx.beginPath();
+
+        RenderEdgeSetNode.evaluate();
+        RenderEdgeSetNode2.evaluate();
+      }
+    </script>
+    
+    <title>reactive data</title>
+  </head>
+  <body style="background-color:gray">
+    <canvas id="debug-canvas" width="400" height="400"></canvas>
+    <button onclick="RenderCanvas()">Evaluate Canvas</button>
+    <script src="test/TestApplyTransformNode.js"></script>
+  </body>
+</html>

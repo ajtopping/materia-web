@@ -1,3 +1,12 @@
+class ddEntry {
+  type = 'null'
+  data_ = null
+
+  constructor( type ) {
+    this.type = type;
+  }
+}
+
 var __DataDictionary = {
   
   dict_ : {},
@@ -18,6 +27,11 @@ var __DataDictionary = {
 
   insert_or_replace : function( key, value ) {
     this.dict_[key] = value;
+    return key;
+  },
+
+  insert_new : function( value ) {
+    return this.insert_or_replace( __CreateUuid(), value );
   },
 
   delete : function( a ) {
