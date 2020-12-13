@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <script src="JS/vue/vue.js"></script>
 
+	<script src="JS/reactive_data/uuid.js"></script>
+    <script src="JS/types.js"></script>
+
+    <script src="JS/reactive_data/data_dictionary.js"></script>
+    <script src="JS/reactive_data/node/NodeFactory.js"></script>
+    <script src="JS/reactive_data/node/Add.js"></script>
+
+    <script src="JS/reactive_data/node.js"></script>
+
     <script src="JS/document_onload_handler.js"></script>
 
     <script src="JS/dragdrop_handler.js"></script>
@@ -16,27 +25,28 @@
   	<canvas id="active-overlay-canvas" width="400" height="200" style="position:relative;z-index:1400;pointer-events: none"></canvas>
   	<button onclick="overlayConnectionRenderer.renderConnections()"> Render connection </button>
   	<div id="graph" style="background-color:darkgray; display:block; ">
-  		<div id="node1" :style="updatedStyle" @mousedown="hello">
-  			<node-component id="node1-component"></node-component>
-  		</div>
-  		<div id="node2" :style="updatedStyle" @mousedown="hello">
-  			<node-component id="node2-component"></node-component>
-  		</div>
+  		<dragdrop-overlay-box id="node1" color="blue" style="width:100px; height:100px">
+  			<node-component id="node1-component" color="cyan" ></node-component>
+  		</dragdrop-overlay-box>
+  		<dragdrop-overlay-box id="node2" color="red" v-bind:pos_x="300" style="width:100px; height:100px">
+  			<node-component id="node2-component" color="pink" ></node-component>
+  		</dragdrop-overlay-box>
   	</div>
+
     <div id="apple">
     	{{ message }}
     </div>
-    <div>
-    	<!--node-component id="node2"></node-component-->
+    <div style="height:150px">
+    	
     </div>
     <div id="node3-parent-parent">
 	    <panning-overlay-box ref="dom" id="node3-parent" style="outline:5px dotted;background-color:white;position: fixed; width:100px; height:400px; ">
-	    	<dragdrop-overlay-box id="node3" style="position: absolute;width:100px; height:100px"></dragdrop-overlay-box>
+	    	<dragdrop-overlay-box id="node3" color="green" style="position: absolute;width:100px; height:100px"></dragdrop-overlay-box>
 	    </panning-overlay-box>
 	</div>
     <div> Node4 below </div>
-	<dragdrop-overlay-box id="node4" style="width:100px; height:100px"></dragdrop-overlay-box>
-    
+	<dragdrop-overlay-box id="node4" v-bind:pos_x="400" color="orange" style="width:200px; height:100px"></dragdrop-overlay-box>
+
 
     <script src="JS/message.js"></script>
 	<script src="JS/node_template.js"></script>

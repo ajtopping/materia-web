@@ -5,50 +5,9 @@ var apple = new Vue({
   }
 })
 
-var node1 = new Vue({
-  el: '#node1',
-  data: {
-    color: "red",
-    x: 50,
-    y: 300,
-  },
-  computed: {
-    updatedStyle: function() {
-      let style = "user-select: none; display: inline-block; scrollbar-width: thin; position:absolute; width:100px;";
-      return style + "left:" + this.x + "px;top:" + this.y + "px;background-color:" + this.color + ";";
-    }
-  },
-  methods: {
-    hello: function() {
-      iDragDropHandler.addToSelection(this);
-    },
-    bye: function() {
-      
-    }
-  }
-})
-
-var node2 = new Vue({
-  el: '#node2',
-  data: {
-    color: "yellow",
-    x: 100,
-    y: 300,
-  },
-  computed: {
-    updatedStyle: function() {
-      let style = "user-select: none; display: inline-block; scrollbar-width: thin; position:absolute; width:100px;";
-      return style + "left:" + this.x + "px;top:" + this.y + "px;background-color:" + this.color + ";";
-    }
-  },
-  methods: {
-    hello: function() {
-      iDragDropHandler.addToSelection(this);
-    },
-    bye: function() {
-      
-    }
-  }
+var graph = new Vue({
+  el: '#graph',
+  
 })
 
 var node3_parent_parent = new Vue({

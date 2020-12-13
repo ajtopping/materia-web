@@ -4,6 +4,7 @@ Vue.component( 'panning-overlay-box', {
     return {
       x: 0,
       y: 0,
+      color: "green",
     }
   },
   computed: {
@@ -33,20 +34,10 @@ Vue.component( 'panning-overlay-box', {
 Vue.component( 'dragdrop-overlay-box', {
   data: function () {
     return {
-      x: this.pos_x,
-      y: this.pos_y,
+      x: 0,
+      y: 100,
+      color: "green",
     }
-  },
-  props: {
-    color: String,
-    pos_x: {
-      type: Number,
-      default: 0,
-    },
-    pos_y: {
-      type: Number,
-      default: 0,
-    },
   },
   computed: {
     updatedStyle: function() {
@@ -65,7 +56,6 @@ Vue.component( 'dragdrop-overlay-box', {
   },
   template: '<div :style="updatedStyle" @mousedown="hello2">\
   {{x}}, {{y}}\
-  <slot></slot>\
   </div>',
 });
 
@@ -75,8 +65,17 @@ Vue.component( 'node-component', {
     return {
       x: 0,
       y: 0,
-      node_model: this.model,
-      node_model2: {
+      color: "blue",
+      inputs: [
+        { name: "in-A"},
+        { name: "in-B"},
+        { name: "in-C"},
+      ],
+      outputs: [
+        { name: "out-A"},
+        { name: "out-B"},
+      ],
+      node_model: {
         inputs_: {
           left : {
             type: 'number',
@@ -95,26 +94,20 @@ Vue.component( 'node-component', {
             entry_uuid: null,
           }
         },
-        func_: {},
-        evaluate: function() { console.log("Evaluating a node..."); },
+        func_: {
+
+        },
       }
     }
   },
   props: {
     color: String,
-    model: {
-      type: Object,
-      default: NodeFactory.create.Add(),
-    }
   },
   template: '<div :style="updatedStyle">\
-  <node-input-component v-for="(input_obj, input_name) in node_model.inputs_" \
-  v-bind:name="input_name" v-bind:type="input_obj.type" v-bind:default_value="input_obj.default">\
+  <node-input-component v-for="(input, index) in inputs" v-bind:index="index" v-bind:name="input.name">\
   </node-input-component>\
-  <node-output-component v-for="(output_obj, output_name) in node_model.outputs_" \
-  v-bind:name="output_name" v-bind:type="output_obj.type">\
+  <node-output-component v-for="(output, index) in outputs" v-bind:index="index" v-bind:name="output.name">\
   </node-output-component>\
-  <button @mousedown="evaluate">Evaluate</button>\
   </div>',
   computed: {
     updatedStyle: function() {
@@ -122,12 +115,6 @@ Vue.component( 'node-component', {
       return style + "left:" + this.x + "px;top:" + this.y + "px;background-color:" + this.color + ";";
     }
   },
-  methods: {
-    evaluate: function(e) {
-      this.node_model.evaluate.call(this.node_model);
-      e.stopPropagation();
-    },
-  }
 });
 
 Vue.component( 'node-input-component', {
@@ -137,10 +124,10 @@ Vue.component( 'node-input-component', {
       y: 0,
     }
   },
-  props: ['name', 'type', 'default_value'],
+  props: ['index', 'name'],
   template: '<div class="node-row-frame" style="float:left; clear:both">\
     <span class="node-input-pin" style="background-color:orange;" @mousedown="startConnection" @mouseup="endConnection">🟠</span>\
-    <span>{{ name }} [{{ default_value }}]</span>\
+    <span>{{ name }}</span>\
   </div>',
   methods: {
     startConnection: function(e) {

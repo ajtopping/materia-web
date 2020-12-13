@@ -60,7 +60,7 @@ class Node {
       this.updateOutputs_( output_pkg );
     }
     else {
-      console.log("Node : evaluate : this.func is undefined");
+      console.log("Node : evaluate : this.func_ is undefined");
     }
   }
 
