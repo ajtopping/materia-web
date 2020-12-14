@@ -76,40 +76,21 @@ Vue.component( 'node-component', {
       x: 0,
       y: 0,
       node_model: this.model,
-      node_model2: {
-        inputs_: {
-          left : {
-            type: 'number',
-            default: 1.0,
-            entry_uuid: null,
-          },
-          right : {
-            type: 'number',
-            default: 2.0,
-            entry_uuid: null,
-          },
-        },
-        outputs_: {
-          output: {
-            type: 'number',
-            entry_uuid: null,
-          }
-        },
-        func_: {},
-        evaluate: function() { console.log("Evaluating a node..."); },
-      }
     }
   },
   props: {
     color: String,
     model: {
       type: Object,
-      default: NodeFactory.create.Add(),
+      default: () => (NodeFactory.create.Add()),
     }
   },
   template: '<div :style="updatedStyle">\
   <node-input-component v-for="(input_obj, input_name) in node_model.inputs_" \
-  v-bind:name="input_name" v-bind:type="input_obj.type" v-bind:default_value="input_obj.default">\
+  v-bind:name="input_name" \
+  v-bind:type="input_obj.type" \
+  v-bind:default_value="input_obj.default"> \
+  v-bind:node_model="node_model"> \
   </node-input-component>\
   <node-output-component v-for="(output_obj, output_name) in node_model.outputs_" \
   v-bind:name="output_name" v-bind:type="output_obj.type">\
@@ -135,21 +116,29 @@ Vue.component( 'node-input-component', {
     return {
       x: 0,
       y: 0,
+      node: this.node_model,
     }
   },
-  props: ['name', 'type', 'default_value'],
+  props: {
+    name: String,
+    type: String,
+    default_value: [String, Number, Object, Array],
+    node_model: Object,
+  },
   template: '<div class="node-row-frame" style="float:left; clear:both">\
     <span class="node-input-pin" style="background-color:orange;" @mousedown="startConnection" @mouseup="endConnection">🟠</span>\
     <span>{{ name }} [{{ default_value }}]</span>\
   </div>',
   methods: {
     startConnection: function(e) {
-        overlayConnectionRenderer.startConnection(this);
-        e.stopPropagation();
+      e.stopPropagation();
+      console.log(this.$parent._data.node_model.name);
+      overlayConnectionRenderer.startConnection(this);
+        
     },
     endConnection: function(e) {
-        overlayConnectionRenderer.endConnection(this);
-        e.stopPropagation();
+      e.stopPropagation();
+      overlayConnectionRenderer.endConnection(this); 
     },
   }
 });

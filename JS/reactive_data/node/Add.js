@@ -1,6 +1,8 @@
 NodeFactory.create.Add = function() {
   let node = new Node();
 
+  node.name = "Add";
+  
   node.inputs_ = {
     left : {
       type: 'number',

@@ -1,4 +1,6 @@
 class Node {
+  name = "Default"
+  
   /*
   name: {
 	  type: 'number|string|etc',
