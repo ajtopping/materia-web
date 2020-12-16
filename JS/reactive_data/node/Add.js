@@ -6,12 +6,12 @@ NodeFactory.create.Add = function() {
   node.inputs_ = {
     left : {
       type: 'number',
-      default: 0.0,
+      default: 1.2,
       entry_uuid: null,
     },
     right : {
       type: 'number',
-      default: 0.0,
+      default: 3.4,
       entry_uuid: null,
     },
   };

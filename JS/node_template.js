@@ -93,9 +93,11 @@ Vue.component( 'node-component', {
   v-bind:node_model="node_model"> \
   </node-input-component>\
   <node-output-component v-for="(output_obj, output_name) in node_model.outputs_" \
-  v-bind:name="output_name" v-bind:type="output_obj.type">\
+  v-bind:name="output_name" \
+  v-bind:type="output_obj.type">\
   </node-output-component>\
   <button @mousedown="evaluate">Evaluate</button>\
+  <button @mousedown="register">Register</button>\
   </div>',
   computed: {
     updatedStyle: function() {
@@ -105,9 +107,13 @@ Vue.component( 'node-component', {
   },
   methods: {
     evaluate: function(e) {
-      this.node_model.evaluate.call(this.node_model);
       e.stopPropagation();
+      this.node_model.evaluate.call(this.node_model);
     },
+    register: function(e) {
+      e.stopPropagation();
+      this.node_model.register();
+    }
   }
 });
 
@@ -132,13 +138,14 @@ Vue.component( 'node-input-component', {
   methods: {
     startConnection: function(e) {
       e.stopPropagation();
-      console.log(this.$parent._data.node_model.name);
-      overlayConnectionRenderer.startConnection(this);
-        
+      __NodeConnectionHandler.setInputRef(this.$parent._data.node_model.inputs_[this.name]);
+      overlayConnectionRenderer.startConnection(this);   
     },
     endConnection: function(e) {
       e.stopPropagation();
-      overlayConnectionRenderer.endConnection(this); 
+      __NodeConnectionHandler.setInputRef(this.$parent._data.node_model.inputs_[this.name]);
+      overlayConnectionRenderer.endConnection(this);
+      __NodeConnectionHandler.attemptConnection();
     },
   }
 });
@@ -148,21 +155,29 @@ Vue.component( 'node-output-component', {
     return {
       x: 0,
       y: 0,
+      node: this.node_model,
     }
   },
-  props: ['index', 'name'],
+   props: {
+    name: String,
+    type: String,
+    node_model: Object,
+  },
   template: '<div class="node-row-frame" style="float:right; clear:both">\
     <span>{{ name }}</span>\
     <span class="node-output-pin" style="background-color:cyan" @mousedown="startConnection" @mouseup="endConnection">🟦</span>\
   </div>',
   methods: {
     startConnection: function(e) {
-        overlayConnectionRenderer.startConnection(this);
-        e.stopPropagation();
+      e.stopPropagation();
+      overlayConnectionRenderer.startConnection(this);
+      __NodeConnectionHandler.setOutputRef(this.$parent._data.node_model.outputs_[this.name]);
     },
     endConnection: function(e) {
-        overlayConnectionRenderer.endConnection(this);
-        e.stopPropagation();
+      e.stopPropagation();
+      overlayConnectionRenderer.endConnection(this);
+      __NodeConnectionHandler.setOutputRef(this.$parent._data.node_model.outputs_[this.name]);
+      __NodeConnectionHandler.attemptConnection();
     },
   }
 });
