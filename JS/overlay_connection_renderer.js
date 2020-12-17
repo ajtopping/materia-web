@@ -38,15 +38,19 @@ var overlayConnectionRenderer = {
     }
   },
 
+  getVueRefNodeIoPinEl_: function(vue_ref) {
+    return vue_ref.$el.getElementsByClassName("node-io-pin")[0];
+  },
+
   renderInProgressConnection: function(event) {
     this.active_context_.clearRect(0, 0, this.active_canvas_.width, this.active_canvas_.height);
     this.active_context_.beginPath();
 
     if (this.temp_start_vue_ref) {
-      let vue_ref_rect = this.temp_start_vue_ref.$el.getBoundingClientRect();
+      let vue_ref_rect = this.getVueRefNodeIoPinEl_(this.temp_start_vue_ref).getBoundingClientRect();
       let vue_ref_transform = {
-        x : vue_ref_rect.x,
-        y : vue_ref_rect.y,
+        x : vue_ref_rect.x + vue_ref_rect.width/2,
+        y : vue_ref_rect.y + vue_ref_rect.height/2,
       }
 
       let mouse_xy = {
@@ -70,23 +74,25 @@ var overlayConnectionRenderer = {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.beginPath();
 
-    console.log("Rendering " + this.connections.length + " connections...");
+    //console.log("Rendering " + this.connections.length + " connections...");
 
     for (connection of this.connections) {
-      let vue_output_rect = connection.output.$el.getBoundingClientRect();
+      let vue_output_rect = this.getVueRefNodeIoPinEl_(connection.output).getBoundingClientRect();
       let vue_output_transform = {
-        x : vue_output_rect.x,
-        y : vue_output_rect.y,
+        x : vue_output_rect.x + vue_output_rect.width/2,
+        y : vue_output_rect.y + vue_output_rect.height/2,
       }
 
-      let vue_input_rect = connection.input.$el.getBoundingClientRect();
+      let vue_input_rect = this.getVueRefNodeIoPinEl_(connection.input).getBoundingClientRect();
       let vue_input_transform = {
-        x : vue_input_rect.x,
-        y : vue_input_rect.y,
+        x : vue_input_rect.x + vue_output_rect.width/2,
+        y : vue_input_rect.y + vue_output_rect.height/2,
       }
 
-      let output_xy = this.clientCoordsToMinimapElementSpace( vue_output_transform, this.passive_canvas_);
-      let input_xy = this.clientCoordsToMinimapElementSpace( vue_input_transform, this.passive_canvas_);
+      //let output_xy = this.clientCoordsToMinimapElementSpace( vue_output_transform, this.passive_canvas_);
+      //let input_xy = this.clientCoordsToMinimapElementSpace( vue_input_transform, this.passive_canvas_);
+      let output_xy = this.clientCoordsToElementSpace( vue_output_transform, this.passive_canvas_);
+      let input_xy = this.clientCoordsToElementSpace( vue_input_transform, this.passive_canvas_);
 
       context.moveTo(output_xy.x, output_xy.y);
       context.lineTo(input_xy.x, input_xy.y);
@@ -127,6 +133,7 @@ var overlayConnectionRenderer = {
 function init_overlay_handler() {
   overlayConnectionRenderer.init_members();
   document.addEventListener("mousemove", e => overlayConnectionRenderer.renderInProgressConnection(e));
+  document.addEventListener("mouseup", () => overlayConnectionRenderer.renderConnections());
   document.addEventListener("mouseup", () => overlayConnectionRenderer.clearTempRefs());
 }
 

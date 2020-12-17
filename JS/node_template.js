@@ -132,7 +132,7 @@ Vue.component( 'node-input-component', {
     node_model: Object,
   },
   template: '<div class="node-row-frame" style="float:left; clear:both">\
-    <span class="node-input-pin" style="background-color:orange;" @mousedown="startConnection" @mouseup="endConnection">🟠</span>\
+    <span class="node-io-pin" style="background-color:orange;" @mousedown="startConnection" @mouseup="endConnection">🟠</span>\
     <span>{{ name }} [{{ default_value }}]</span>\
   </div>',
   methods: {
@@ -165,7 +165,7 @@ Vue.component( 'node-output-component', {
   },
   template: '<div class="node-row-frame" style="float:right; clear:both">\
     <span>{{ name }}</span>\
-    <span class="node-output-pin" style="background-color:cyan" @mousedown="startConnection" @mouseup="endConnection">🟦</span>\
+    <span class="node-io-pin" style="background-color:cyan" @mousedown="startConnection" @mouseup="endConnection">🟦</span>\
   </div>',
   methods: {
     startConnection: function(e) {

@@ -1,10 +1,3 @@
-var apple = new Vue({
-  el: '#apple',
-  data: {
-    message: 'Hello Vue!'
-  }
-})
-
 var graph = new Vue({
   el: '#graph',
   
