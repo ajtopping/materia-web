@@ -28,7 +28,6 @@ class Node {
     this.createDataDictionaryOutputEntries_();
   }
 
-  // 
   createDataDictionaryOutputEntries_() {
     for ( const output in this.outputs_ ) {
     	let entry = new ddEntry( this.outputs_[output].type );
