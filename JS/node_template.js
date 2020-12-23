@@ -108,7 +108,8 @@ Vue.component( 'node-component', {
   methods: {
     evaluate: function(e) {
       e.stopPropagation();
-      this.node_model.evaluate.call(this.node_model);
+      //this.node_model.evaluate.call(this.node_model);
+      __NodeGraphHandler.cascade_evaluate_from_node( this.node_model );
     },
     register: function(e) {
       e.stopPropagation();
@@ -143,9 +144,18 @@ Vue.component( 'node-input-component', {
     },
     endConnection: function(e) {
       e.stopPropagation();
+
       __NodeConnectionHandler.setInputRef(this.$parent._data.node_model.inputs_[this.name]);
-      overlayConnectionRenderer.endConnection(this);
-      __NodeConnectionHandler.attemptConnection();
+      let success = __NodeConnectionHandler.attemptConnection();
+
+      if ( success ) {
+        let uuid = this.$parent._data.node_model.inputs_[this.name].entry_uuid;
+        let node = this.$parent._data.node_model;
+        console.log(node.name + "." + this.name + " set to " + uuid);
+        __NodeGraphHandler.add_node( uuid, node );
+
+        overlayConnectionRenderer.endConnection(this);
+      }
     },
   }
 });
@@ -175,9 +185,18 @@ Vue.component( 'node-output-component', {
     },
     endConnection: function(e) {
       e.stopPropagation();
-      overlayConnectionRenderer.endConnection(this);
+      
       __NodeConnectionHandler.setOutputRef(this.$parent._data.node_model.outputs_[this.name]);
-      __NodeConnectionHandler.attemptConnection();
+      let success = __NodeConnectionHandler.attemptConnection();
+
+      if ( success ) {
+        let uuid = this.$parent._data.node_model.outputs_[this.name].entry_uuid;
+        console.log("INPUT TO OUTPUT DOES NOT WORK YET.");
+        //let node = this.$parent._data.node_model;
+        //__NodeGraphHandler.add_node( uuid, node );
+
+        //overlayConnectionRenderer.endConnection(this);
+      }
     },
   }
 });
