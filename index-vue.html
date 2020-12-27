@@ -10,6 +10,11 @@
     <script src="JS/reactive_data/data_dictionary.js"></script>
     <script src="JS/reactive_data/node/NodeFactory.js"></script>
     <script src="JS/reactive_data/node/Add.js"></script>
+    <script src="JS/reactive_data/node/Ngon.js"></script>
+    <script src="JS/reactive_data/node/EdgeLoop.js"></script>
+    <script src="JS/reactive_data/node/RenderEdgeSet.js"></script>
+    <script src="JS/reactive_data/node/GetElementById.js"></script>
+
 
     <script src="JS/reactive_data/node.js"></script>
     <script src="JS/reactive_data/NodeConnectionHandler.js"></script>
@@ -26,6 +31,26 @@
   	<canvas id="passive-overlay-canvas" width="400" height="400" style="outline:2px dotted; outline-color: white;position:relative;z-index:1401;pointer-events: none"></canvas>
   	<canvas id="active-overlay-canvas" width="400" height="400" style="outline:2px dotted; outline-color: red;position:relative;z-index:1400;pointer-events: none;"></canvas>
   	<button onclick="overlayConnectionRenderer.renderConnections()"> Render connection </button>
+    <div id="graph2" style="width:1000px; height:200px; background-color:white">
+      <button id="new-add-node-button" @click="newAddNode()"> 
+        New Add Node
+      </button>
+      <button id="new-ngon-node-button" @click="newNgonNode()"> 
+        New Ngon Node
+      </button>
+      <button id="new-edge-loop-node-button" @click="newEdgeLoopNode()"> 
+        New Edge Loop Node
+      </button>
+      <button id="new-get-element-by-id-node-button" @click="newGetElementByIdNode()"> 
+        New Get Element By Id Node
+      </button>
+      <button id="new-render-edge-set-node-button" @click="newRenderEdgeSetNode()"> 
+        New Render Edge Set Node
+      </button>
+      <dragdrop-overlay-box  v-for="(node) in nodes">
+        <node-component id="node-component" color="cyan" v-bind:model="node"></node-component>
+      </dragdrop-overlay-box>
+    </div>
   	<div id="graph" style="background-color:darkgray; display:block; ">
   		<dragdrop-overlay-box id="node1" color="blue" style="width:100px; height:100px">
   			<node-component id="node1-component" color="cyan" ></node-component>
@@ -34,7 +59,6 @@
   			<node-component id="node2-component" color="pink" ></node-component>
   		</dragdrop-overlay-box>
   	</div>
-
     <div style="height:150px">
     	
     </div>

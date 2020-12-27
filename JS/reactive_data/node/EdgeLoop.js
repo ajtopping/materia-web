@@ -22,13 +22,16 @@ NodeFactory.create.EdgeLoop= function() {
   };
 
   node.func_ = function( i ) {
-    let num_edges = i.num_verts - 1 + (i.is_closed);
+    let num_verts = parseInt(i.num_verts);
+    let is_closed = i.is_closed==='true'
+
+    let num_edges = num_verts - 1 + is_closed;
     let indexes = new Array(num_edges * 2);
     for( let i = 0; i < num_edges; i++ ) {
       indexes[i*2] = i;
       indexes[i*2+1] = i+1
     }
-    if ( i.is_closed ) {
+    if ( is_closed ) {
       indexes[indexes.length-1] = 0;
     }
 

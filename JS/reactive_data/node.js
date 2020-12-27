@@ -20,12 +20,20 @@ class Node {
 
   func_ = undefined
 
+  // yuck
+  registered_ = false
+
   constructor() {
     
   }
 
   register() {
     this.createDataDictionaryOutputEntries_();
+    this.registered_ = true;
+  }
+
+  is_registered() {
+    return this.registered_;
   }
 
   createDataDictionaryOutputEntries_() {

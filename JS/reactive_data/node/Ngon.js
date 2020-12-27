@@ -17,7 +17,7 @@ NodeFactory.create.Ngon= function() {
   };
 
   node.func_ = function( i ) {
-    let num_sides = i.num_sides;
+    let num_sides = parseInt(i.num_sides);
 
     let ngon = new Array(num_sides);
     let angle = 2 * Math.PI / num_sides;

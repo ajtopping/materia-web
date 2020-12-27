@@ -89,15 +89,17 @@ Vue.component( 'node-component', {
   <node-input-component v-for="(input_obj, input_name) in node_model.inputs_" \
   v-bind:name="input_name" \
   v-bind:type="input_obj.type" \
-  v-bind:default_value="input_obj.default"> \
-  v-bind:node_model="node_model"> \
+  v-bind:default_value="input_obj.default" \
+  v-bind:input_model="input_obj" \
+  v-bind:node_model="node_model" \
+  > \
   </node-input-component>\
   <node-output-component v-for="(output_obj, output_name) in node_model.outputs_" \
   v-bind:name="output_name" \
   v-bind:type="output_obj.type">\
   </node-output-component>\
   <button @mousedown="evaluate">Evaluate</button>\
-  <button @mousedown="register">Register</button>\
+  <button v-if="!node_model.is_registered()" @mousedown="register">Register</button>\
   </div>',
   computed: {
     updatedStyle: function() {
@@ -124,19 +126,26 @@ Vue.component( 'node-input-component', {
       x: 0,
       y: 0,
       node: this.node_model,
+      input: this.input_model,
+      value: this.default_value,
     }
   },
   props: {
     name: String,
     type: String,
-    default_value: [String, Number, Object, Array],
+    default_value: [String, Number, Object, Array, Boolean],
+    input_model: Object,
     node_model: Object,
   },
-  template: '<div class="node-row-frame" style="float:left; clear:both">\
+  template: `<div class="node-row-frame" style="float:left; clear:both">\
     <span class="node-io-pin" style="background-color:orange;" @mousedown="startConnection" @mouseup="endConnection">🟠</span>\
-    <span>{{ name }} [{{ default_value }}]</span>\
-  </div>',
+    <span>{{ name }} [{{ input.default }}]</span>\
+    <input :type="type" v-model="input.default" @mousedown="noProp"></input>\
+  </div>`,
   methods: {
+    noProp: function(e) {
+      e.stopPropagation();
+    },
     startConnection: function(e) {
       e.stopPropagation();
       __NodeConnectionHandler.setInputRef(this.$parent._data.node_model.inputs_[this.name]);
@@ -178,6 +187,9 @@ Vue.component( 'node-output-component', {
     <span class="node-io-pin" style="background-color:cyan" @mousedown="startConnection" @mouseup="endConnection">🟦</span>\
   </div>',
   methods: {
+    noProp: function(e) {
+      e.stopPropagation();
+    },
     startConnection: function(e) {
       e.stopPropagation();
       overlayConnectionRenderer.startConnection(this);
