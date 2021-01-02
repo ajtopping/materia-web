@@ -1,3 +1,12 @@
+function _STypeToSFormInput( type ) {
+  switch (type) {
+    case 'boolean':
+      return 'checkbox';
+    default:
+      return type;
+  }
+};
+
 // A div with clipped boundaries that allows for camera panning
 Vue.component( 'panning-overlay-box', {
   data: function () {
@@ -140,7 +149,7 @@ Vue.component( 'node-input-component', {
   template: `<div class="node-row-frame" style="float:left; clear:both">\
     <span class="node-io-pin" style="background-color:orange;" @mousedown="startConnection" @mouseup="endConnection">🟠</span>\
     <span>{{ name }} [{{ input.default }}]</span>\
-    <input :type="type" v-model="input.default" @mousedown="noProp"></input>\
+    <input v-model="input.default" :type="_STypeToSFormInput(type)"  @mousedown="noProp"></input>\
   </div>`,
   methods: {
     noProp: function(e) {

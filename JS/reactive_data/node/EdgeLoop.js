@@ -11,7 +11,7 @@ NodeFactory.create.EdgeLoop= function() {
       type: 'boolean',
       default: true,
       entry_uuid: null,
-    }
+    },
   };
 
   node.outputs_ = {
@@ -22,10 +22,11 @@ NodeFactory.create.EdgeLoop= function() {
   };
 
   node.func_ = function( i ) {
-    let num_verts = parseInt(i.num_verts);
-    let is_closed = i.is_closed==='true'
+    let num_verts = i.num_verts;
+    let is_closed = i.is_closed;
 
     let num_edges = num_verts - 1 + is_closed;
+    console.log(num_edges);
     let indexes = new Array(num_edges * 2);
     for( let i = 0; i < num_edges; i++ ) {
       indexes[i*2] = i;

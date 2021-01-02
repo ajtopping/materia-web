@@ -25,7 +25,7 @@ NodeFactory.create.Add = function() {
 
   node.func_ = function( i ) {
     let o = {
-      output: parseFloat(i.left) + parseFloat(i.right),
+      output: i.left + i.right,
     };
     console.log(o);
     return o;
