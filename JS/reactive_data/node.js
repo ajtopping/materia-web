@@ -60,7 +60,8 @@ class Node {
   }
 
   breakInputConnection( input_name ) {
-
+    //this.inputs_[input_name].entry_uuid = null;
+    // TODO __NodeGraphHandler break connection
   }
 
   evaluate() {
@@ -113,5 +114,26 @@ class Node {
     }
 
     return pkg;
+  }
+
+  getComputedInput( key ) {
+    let input = this.inputs_[key];
+
+    if ( input === undefined ) {
+      return "MISSING KEY: '" + key + "'";
+    }
+
+    if ( input.entry_uuid !== null ) {
+      // look up in __DD, confirm slot is still valid
+      if ( !__DataDictionary.has(input.entry_uuid) ) {
+        console.log("Node : getComputedInput : __DD has not entry with key " + input.entry_uuid);
+        return "MISSING __DD: '" + key + "'";
+      }
+      else {
+        return "a" + __DataDictionary.get(input.entry_uuid).data_;
+      }
+    }
+    
+    return input.default;
   }
 }

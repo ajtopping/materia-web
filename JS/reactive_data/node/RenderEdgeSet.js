@@ -16,7 +16,12 @@ NodeFactory.create.RenderEdgeSet= function() {
       type: 'Array number',
       default: [],
       entry_uuid: null,
-    }
+    },
+    clear : {
+      type: 'boolean',
+      default: true,
+      entry_uuid: null,
+    },
   };
 
   node.outputs_ = {
@@ -27,6 +32,13 @@ NodeFactory.create.RenderEdgeSet= function() {
     
     let canvas_transform = new _Transform( i.canvas.width/2, i.canvas.height/2, 0, i.canvas.width/2, i.canvas.height/2 );
     let ctx = i.canvas.getContext("2d");
+
+    if ( i.clear ) {
+      ctx.save();
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.clearRect(0,0,i.canvas.width, i.canvas.height);
+      ctx.restore();
+    }
 
     ctx.fillStyle = "white";
     ctx.fillRect(0,0, i.canvas.width, i.canvas.height);

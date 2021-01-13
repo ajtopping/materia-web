@@ -148,8 +148,13 @@ Vue.component( 'node-input-component', {
   },
   template: `<div class="node-row-frame" style="float:left; clear:both">\
     <span class="node-io-pin" style="background-color:orange;" @mousedown="startConnection" @mouseup="endConnection">🟠</span>\
-    <span>{{ name }} [{{ input.default }}]</span>\
-    <input v-model="input.default" :type="_STypeToSFormInput(type)"  @mousedown="noProp"></input>\
+    <span>{{ name }} [{{ value }}]</span>\
+    <input \
+    v-model="input.default" \
+    :type="_STypeToSFormInput(type)"  \
+    @mousedown="noProp" \
+    :disabled="input.entry_uuid != null" \
+    ></input>\
   </div>`,
   methods: {
     noProp: function(e) {
@@ -174,6 +179,11 @@ Vue.component( 'node-input-component', {
 
         overlayConnectionRenderer.endConnection(this);
       }
+    },
+  },
+  computed: {
+    bazinga: function() {
+      return this.node.getComputedInput( this.name );
     },
   }
 });
