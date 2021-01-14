@@ -6,7 +6,7 @@ NodeFactory.create.GetElementById = function() {
   node.inputs_ = {
     id : {
       type: 'string',
-      default: '',
+      default: 'render-canvas',
       entry_uuid: null,
     },
   };

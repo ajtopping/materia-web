@@ -13,6 +13,7 @@
     <script src="JS/reactive_data/node/Ngon.js"></script>
     <script src="JS/reactive_data/node/EdgeLoop.js"></script>
     <script src="JS/reactive_data/node/RenderEdgeSet.js"></script>
+    <script src="JS/reactive_data/node/RenderPoints.js"></script>
     <script src="JS/reactive_data/node/GetElementById.js"></script>
 
 
@@ -32,7 +33,7 @@
   	<canvas id="active-overlay-canvas" width="400" height="400" style="outline:2px dotted; outline-color: red;position:relative;z-index:1400;pointer-events: none;"></canvas>
     <canvas id="render-canvas" width="100" height="100" style="outline:2px dotted; outline-color: blue;position:relative;z-index:1400;pointer-events: none;"></canvas>
   	<button onclick="overlayConnectionRenderer.renderConnections()"> Render connection </button>
-    <div id="graph2" style="width:1000px; height:200px; background-color:white">
+    <div id="graph2" style="width:200px; height:200px; background-color:white">
       <button id="new-add-node-button" @click="newAddNode()"> 
         New Add Node
       </button>
@@ -48,10 +49,19 @@
       <button id="new-render-edge-set-node-button" @click="newRenderEdgeSetNode()"> 
         New Render Edge Set Node
       </button>
+      <button id="new-render-points-node-button" @click="newRenderPointsNode()"> 
+        New Render Points Node
+      </button>
+      <panning-overlay-box>
+        <div style="width:300px;">
+          Click to scrollLeft += 5
+        </div>
+      </panning-overlay-box>
       <dragdrop-overlay-box  v-for="(node) in nodes">
         <node-component id="node-component" color="cyan" v-bind:model="node"></node-component>
       </dragdrop-overlay-box>
     </div>
+
   	<div id="graph" style="background-color:darkgray; display:block; ">
   		<dragdrop-overlay-box id="node1" color="blue" style="width:100px; height:100px">
   			<node-component id="node1-component" color="cyan" ></node-component>

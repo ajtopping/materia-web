@@ -42,6 +42,9 @@ const graph2 = new Vue({
     },
     newRenderEdgeSetNode() {
       this.nodes.push( NodeFactory.create.RenderEdgeSet() );
+    },
+    newRenderPointsNode() {
+      this.nodes.push( NodeFactory.create.RenderPoints() );
     }
   },
 })
