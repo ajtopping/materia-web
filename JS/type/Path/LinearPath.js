@@ -1,4 +1,3 @@
-// Linearly interpolated 2 vertexes
 class _LinearPath {
 
 	constructor( verts=[] ) {
@@ -7,10 +6,15 @@ class _LinearPath {
 		this.start_ = this.verts_[0];
 		this.end_ = this.verts_[1];
 		this.delta_ = new _2f( this.end_.x-this.start_.x, this.end_.y-this.start_.y );
+		this.normal_ = new _2f( -1 * this.delta_.y, this.delta_.x );
 	}
 
 	position( percent ) {
 		return new _2f( this.start_.x + percent * this.delta_.x, this.start_.y + percent * this.delta_.y );
+	}
+
+	normal( percent ) {
+		return new _2f( this.normal_.x * this.flip_mod, this.normal_.y * this.flip_mod );
 	}
 
 	// Exactly 2 vertexes

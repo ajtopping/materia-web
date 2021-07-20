@@ -19,7 +19,7 @@ EdgeLoopNode.evaluate();
 var RenderEdgeSetNode = NodeFactory.create.RenderEdgeSet();
 RenderEdgeSetNode.register();
 var RenderEdgeSetNodeA = new ddEntry( 'canvas' );
-RenderEdgeSetNodeA.data_ = document.getElementById('debug-canvas');
+RenderEdgeSetNodeA.data_ = document.getElementById('render-canvas');
 var uuidRenderEdgeSetNodeA = __DataDictionary.insert_new( RenderEdgeSetNodeA );
 RenderEdgeSetNode.attemptConnectInput( 'canvas', uuidRenderEdgeSetNodeA );
 RenderEdgeSetNode.attemptConnectInput( 'verts', uuidNgonNodeOutput );
@@ -38,8 +38,10 @@ ApplyTransformNode.evaluate();
 var RenderEdgeSetNode2 = NodeFactory.create.RenderEdgeSet();
 RenderEdgeSetNode2.register();
 var RenderEdgeSetNode2A = new ddEntry( 'canvas' );
-RenderEdgeSetNode2A.data_ = document.getElementById('debug-canvas');
+RenderEdgeSetNode2A.data_ = document.getElementById('render-canvas');
 var uuidRenderEdgeSetNode2A = __DataDictionary.insert_new( RenderEdgeSetNode2A );
 RenderEdgeSetNode2.attemptConnectInput( 'canvas', uuidRenderEdgeSetNodeA );
 RenderEdgeSetNode2.attemptConnectInput( 'verts', uuidApplyTransformOutput );
 RenderEdgeSetNode2.attemptConnectInput( 'indexes', uuidEdgeLoopNodeOutput );
+
+RenderEdgeSetNode2.evaluate()
