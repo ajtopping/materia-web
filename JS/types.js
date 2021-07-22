@@ -58,11 +58,15 @@ class _Polygon {
 		}
 	}
 
-	get is_closed {
+	get vertexes() {
+		return this.vertexes_;
+	}
+
+	get is_closed() {
 		return this.is_closed_;
 	}
 	
-	get length {
+	get length() {
 		return this.total_length_;
 	}
 }
@@ -87,7 +91,7 @@ class _Shape {
 		}
 	}
 
-	get length {
+	get length() {
 
 	}
 }

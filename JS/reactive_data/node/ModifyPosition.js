@@ -1,17 +1,17 @@
-NodeFactory.create.Ngon= function() {
+NodeFactory.create.ModifyPosition= function() {
   let node = new Node();
 
   node.inputs_ = {
-    num_sides : {
-      type: 'number',
-      default: 3,
+    shape : {
+      type: '_Shape',
+      default: null,
       entry_uuid: null,
     },
   };
 
   node.outputs_ = {
     output: {
-      type: 'Array _2f',
+      type: '_Shape',
       entry_uuid: null,
       },
   };
@@ -26,7 +26,7 @@ NodeFactory.create.Ngon= function() {
     }
 
     let o = {
-      output: ngon,
+      output: shape,
     };
     console.log(o);
     return o;
