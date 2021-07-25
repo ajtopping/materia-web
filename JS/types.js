@@ -36,12 +36,16 @@ class _Polygon {
 	}
 
 	calc_meta_data_() {
+		this.calc_lengths_();
+		this.calc_percents_();
+		this.calc_normals_();
+	}
+
+	calc_lengths_() {
 		this.lengths_ = new Array( this.vertexes_.length )
-		this.percents_ = new Array( this.vertexes_.length )
 
 		this.total_length_ = 0.0;
 		this.lengths_[0] = 0.0;
-		this.percents_[0] = 0.0;
 
 		for( let i = 1; i < this.lengths_.length; i++ ) {
 			this.lengths_[i] = __Trig.dist( this.vertexes_[i-1], this.vertexes_[i] ) + this.lengths_[i-1];
@@ -52,14 +56,39 @@ class _Polygon {
 		} else {
 			this.total_length_ = this.lengths_[this.lengths_.length-1];
 		}
+	}
+
+	calc_percents_() {
+		this.percents_ = new Array( this.vertexes_.length );
 
 		for( let i = 1; i < this.percents_.length; i++ ) {
 			this.percents_[i] = this.lengths_[i] / this.total_length_;
 		}
 	}
 
+	calc_normals_() {
+		this.normals_ = new Array( this.vertexes_.length );
+		let v = this.vertexes_;
+
+		for( let i = 1; i < this.normals_.length-1; i++ ) {
+			this.normals_[i] = __Trig.normal(v[i-1], v[i], v[i+1]);
+		}
+
+		if ( this.is_closed_ ) {
+			this.normals_[0] = __Trig.normal(v[v.length-1], v[0], v[1]);
+			this.normals_[v.length-1] = __Trig.normal(v[v.length-2], v[v.length-1], v[0]);
+		} else {
+			this.normals_[0] = new _2f(0,0);
+			this.normals_[v.length-1] = new _2f(0,0);
+		}
+	}
+
 	get vertexes() {
 		return this.vertexes_;
+	}
+
+	get normals() {
+		return this.normals_;
 	}
 
 	get is_closed() {
