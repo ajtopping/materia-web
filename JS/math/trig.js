@@ -39,4 +39,11 @@ var __Trig = {
 		return hfa;
 	},
 
+	lerp : function( p1, p2, t ) {
+		let dx = p2.x - p1.x;
+		let dy = p2.y - p1.y;
+
+		return new _2f( p1.x + dx * t, p1.y + dy * t);
+	},
+
 }

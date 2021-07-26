@@ -27,6 +27,41 @@ class _Polygon {
 		this.calc_meta_data_();
 	}
 
+	// Returns a _2f p percent along the polygon's edge
+	percent( p ) {
+		let ps = this.percents_;
+
+		p %= 1;
+		p = p < 0 ? 1 + p : p;
+
+		let low_i = this.nearest_less_than_percent_( p );
+		let high_i = (low_i + 1) % ps.length;
+		let low_p = ps[ low_i ];
+		let high_p = ps[ high_i ];
+		high_p = high_p == 0 ? 1.0 : high_p;
+		p = (p - low_p) / (high_p - low_p);
+
+		return __Trig.lerp( ps[low_i], ps[high_i], p );
+	}
+
+	// Returns the vertex index that is the nearest percent without being greater than p
+	nearest_less_than_percent_( p ) {
+		let ps = this.percents_;
+		let i = Math.floor(ps.length / 2);
+		let width = Math.floor(i / 2);
+
+		for ( let j = 0; j < Math.log2(this.percents_.length); j++ ) {
+			if ( ps[i] < p ) {
+				i -= width;
+			} else {
+				i += width;
+			}
+			width = Math.floor(width / 2);
+		}
+
+		return i;
+	}
+
 	copy_vertex_data_( _2f_arr ) {
 		this.vertexes_ = new Array( _2f_arr===null ? 0 : _2f_arr.length );
 
@@ -78,6 +113,7 @@ class _Polygon {
 			this.normals_[0] = __Trig.normal(v[v.length-1], v[0], v[1]);
 			this.normals_[v.length-1] = __Trig.normal(v[v.length-2], v[v.length-1], v[0]);
 		} else {
+			console.warn("types.js/_Polygon.calc_normals_(): non-closed polygon has zeroed first and last nomrals");
 			this.normals_[0] = new _2f(0,0);
 			this.normals_[v.length-1] = new _2f(0,0);
 		}

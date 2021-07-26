@@ -1,13 +1,3 @@
-const graph = new Vue({
-  el: '#graph',
-})
-
-
-
-var node3_parent_parent = new Vue({
-  el: '#node3-parent-parent',
-  
-})
 
 var node4 = new Vue({
   el: '#node4',
