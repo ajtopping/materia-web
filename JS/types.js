@@ -30,35 +30,45 @@ class _Polygon {
 	// Returns a _2f p percent along the polygon's edge
 	percent( p ) {
 		let ps = this.percents_;
+		let vs = this.vertexes_;
 
 		p %= 1;
 		p = p < 0 ? 1 + p : p;
 
 		let low_i = this.nearest_less_than_percent_( p );
+		//console.log(low_i);
 		let high_i = (low_i + 1) % ps.length;
 		let low_p = ps[ low_i ];
 		let high_p = ps[ high_i ];
 		high_p = high_p == 0 ? 1.0 : high_p;
+
+		if ( !(low_p <= p && p <= high_p) ) {
+			console.log( low_p + " / " + p + " / " + high_p);
+			console.log(ps);
+		}
+		
 		p = (p - low_p) / (high_p - low_p);
 
-		return __Trig.lerp( ps[low_i], ps[high_i], p );
+		return __Trig.lerp( vs[low_i], vs[high_i], p );
 	}
 
 	// Returns the vertex index that is the nearest percent without being greater than p
 	nearest_less_than_percent_( p ) {
 		let ps = this.percents_;
 		let i = Math.floor(ps.length / 2);
-		let width = Math.floor(i / 2);
+		let width = i / 2;
 
-		for ( let j = 0; j < Math.log2(this.percents_.length); j++ ) {
-			if ( ps[i] < p ) {
+		for ( let j = 0; j < Math.log2(ps.length); j++ ) {
+			if ( ps[i] > p ) {
 				i -= width;
 			} else {
 				i += width;
 			}
-			width = Math.floor(width / 2);
+			i = Math.floor(i);
+			width = width / 2;
 		}
 
+		
 		return i;
 	}
 
@@ -96,6 +106,7 @@ class _Polygon {
 	calc_percents_() {
 		this.percents_ = new Array( this.vertexes_.length );
 
+		this.percents_[0] = 0.0;
 		for( let i = 1; i < this.percents_.length; i++ ) {
 			this.percents_[i] = this.lengths_[i] / this.total_length_;
 		}
