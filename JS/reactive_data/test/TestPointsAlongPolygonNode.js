@@ -21,7 +21,7 @@ var PointsAlongPolygonNode = NodeFactory.create.PointsAlongPolygon();
 PointsAlongPolygonNode.register();
 
 var PointsAlongPolygonNode_NUM_POINTS = new ddEntry( 'number' );
-PointsAlongPolygonNode_NUM_POINTS.data_ = 8;
+PointsAlongPolygonNode_NUM_POINTS.data_ = 4;
 var UUID_PointsAlongPolygonNode_NUM_POINTS = __DataDictionary.insert_new( PointsAlongPolygonNode_NUM_POINTS );
 
 var PointsAlongPolygonNode_CAP_ENDS = new ddEntry( 'boolean' );

@@ -58,7 +58,7 @@ class _Polygon {
 		let i = Math.floor(ps.length / 2);
 		let width = i / 2;
 
-		for ( let j = 0; j < Math.log2(ps.length); j++ ) {
+		for ( let j = 0; j < Math.log2(ps.length) + 1; j++ ) {
 			if ( ps[i] > p ) {
 				i -= width;
 			} else {
@@ -68,7 +68,10 @@ class _Polygon {
 			width = width / 2;
 		}
 
-		
+		if ( p > ps[ps.length-1] ) {
+			i++;
+		}
+
 		return i;
 	}
 

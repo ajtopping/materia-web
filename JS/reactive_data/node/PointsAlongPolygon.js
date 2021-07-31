@@ -32,8 +32,9 @@ NodeFactory.create.PointsAlongPolygon= function() {
 		let spacing = 1.0 / (i.num_points + 1);
 
 		for( let j = +i.cap_ends; j < ps.length - i.cap_ends; j++ ) {
-			ps[j] = p.percent( j * spacing );
+			ps[j] = p.percent( (j + !i.cap_ends) * spacing );
 		}
+
 
 		if ( i.cap_ends ) {
 			ps[0] = p.percent( 0.0 );
@@ -44,6 +45,7 @@ NodeFactory.create.PointsAlongPolygon= function() {
 			output: ps,
 		};
 		console.log(o);
+		console.warn("WARN: PointsAlongPolygon.js: i.polygon.is_closed not being used. Fix that.");
 		return o;
 	}
 
