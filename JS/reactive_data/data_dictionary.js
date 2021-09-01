@@ -35,6 +35,6 @@ var __DataDictionary = {
   },
 
   delete : function( a ) {
-
+    console.warn('data_dictionary.js : __DataDictionary.delete : Not implemented yet!')
   }
 }

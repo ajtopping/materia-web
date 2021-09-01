@@ -5,7 +5,7 @@ NodeFactory.create.ApplyTransform= function() {
 
   node.inputs_ = {
     transform : {
-      type: '_transform',
+      type: '_Transform',
       default: new _Transform(),
       entry_uuid: null,
     },
