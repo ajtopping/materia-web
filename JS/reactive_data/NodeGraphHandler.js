@@ -35,9 +35,9 @@ var __NodeGraphHandler = {
     let uuid = null;
     let node_set = null;
     for ( const key in node.outputs_ ) {
-      console.log(key);
+      // console.log(key);
       if ( uuid = node.outputs_[key].entry_uuid ) {
-        console.log("output " + key + " has uuid " + uuid);
+        // console.log("output " + key + " has uuid " + uuid);
         if ( node_set = this.output_to_node_set_.get(uuid) ) {
           let iter = node_set.values();
           for ( const child_node of iter ) {

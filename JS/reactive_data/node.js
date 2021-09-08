@@ -4,6 +4,7 @@ class Node {
   /*
   name: {
 	  type: 'number|string|etc',
+    multi: bool,
 	  default: <value>,
 	  entry_uuid: <UUID>,
 	  }
@@ -62,6 +63,7 @@ class Node {
   breakInputConnection( input_name ) {
     //this.inputs_[input_name].entry_uuid = null;
     // TODO __NodeGraphHandler break connection
+    console.warn("Node : breakInputConnection : not yet implemented.");
   }
 
   evaluate() {

@@ -16,7 +16,7 @@ var __NodeConnectionHandler = {
   },
 
   breakConnection: function() {
-
+    console.warn("NodeConnectionHandler : beakConnection : not yet implemented.")
   },
 
   attemptConnection() {
