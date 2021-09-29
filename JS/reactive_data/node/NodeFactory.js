@@ -1,3 +1,6 @@
 var NodeFactory = {
-  create: {},
+  create: {
+  	input: {},
+  	output: {},
+  },
 };

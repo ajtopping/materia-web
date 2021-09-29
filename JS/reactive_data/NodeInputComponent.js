@@ -10,7 +10,8 @@ class NodeInputComponent {
 
   entry_uuid = null
 
-  constructor() {
+  constructor( multi=false ) {
+    this.multi = multi;
     if ( this.multi ) {
       this.default = new Set()
     }

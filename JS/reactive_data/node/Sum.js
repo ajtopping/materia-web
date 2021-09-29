@@ -2,18 +2,11 @@ NodeFactory.create.Sum = function() {
   let node = new Node();
 
   node.inputs_ = {
-    array : {
-      type: 'Array number',
-      default: [],
-      entry_uuid: null,
-    },
+    numbers : NodeFactory.create.input.Number.multi(),
   };
 
   node.outputs_ = {
-    output: {
-      type: 'number',
-      entry_uuid: null,
-      },
+    output: NodeFactory.create.output.Number(),
   };
 
   node.func_ = function( i ) {
