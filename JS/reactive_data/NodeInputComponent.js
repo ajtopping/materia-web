@@ -71,7 +71,7 @@ class NodeInputComponent {
   makePackage() {
     if ( !this.multi ) {
       if ( this.entry_uuid !== null ) {
-        entry_data = this.lookUpEntryData_( this.entry_uuid );
+        let entry_data = this.lookUpEntryData_( this.entry_uuid );
         if ( entry_data === undefined ) {
           console.log("NodeInputComponent : makePackage : __DD has not entry with key " + this.entry_uuid);
         }
@@ -87,7 +87,7 @@ class NodeInputComponent {
       let iter = this.default.values();
       let pkg = new Array()
       for ( const uuid of iter ) {
-        entry_data = this.lookUpEntryData_( this.entry_uuid );
+        let entry_data = this.lookUpEntryData_( uuid );
         if ( entry_data === undefined ) {
           console.warn("NodeInputComponent : makePackage : __DD has not entry with key " + this.entry_uuid + ". Skipping add to multi package...");
         }

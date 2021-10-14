@@ -1,12 +1,3 @@
-// input
-NodeFactory.create.input.Number.single = function() {
-  return NodeFactory.create.input.Number( false );
-}
-
-NodeFactory.create.input.Number.multi = function() {
-  return NodeFactory.create.input.Number( true );
-}
-
 NodeFactory.create.input.Number = function( multi ) {
   let input = new NodeInputComponent( multi );
 
@@ -15,6 +6,15 @@ NodeFactory.create.input.Number = function( multi ) {
   input.type = "number";
 
   return input;
+};
+
+// input
+NodeFactory.create.input.Number.single = function() {
+  return NodeFactory.create.input.Number( false );
+};
+
+NodeFactory.create.input.Number.multi = function() {
+  return NodeFactory.create.input.Number( true );
 };
 
 // output

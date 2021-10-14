@@ -1,5 +1,5 @@
 NodeFactory.create.Sum = function() {
-  let node = new Node();
+  let node = new AdvNode();
 
   node.inputs_ = {
     numbers : NodeFactory.create.input.Number.multi(),
@@ -10,11 +10,11 @@ NodeFactory.create.Sum = function() {
   };
 
   node.func_ = function( i ) {
-    let sum = i.array.reduce( (a,b) => a+b );
+    let sum = i.numbers.reduce( (a,b) => a+b );
     let o = {
       output: sum,
     };
-    console.log(o);
+    //console.log(o);
     return o;
   }
 

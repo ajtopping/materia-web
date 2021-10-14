@@ -1,56 +1,68 @@
-describe("Add", function() {
+describe("Sum", function() {
+  var Node;
 
   beforeEach(function() {
-    //player = new Player();
-    //song = new Song();
+    Node = NodeFactory.create.Sum();
+    Node.register();
   });
 
-  it("should be able to play a Song", function() {
-    player.play(song);
-    expect(player.currentlyPlayingSong).toEqual(song);
+  it("should take a single float and return it", function() {
+    let A1 = new ddEntry( 'number' );
+    A1.data_ = 1.1;
 
-    //demonstrates use of custom matcher
-    expect(player).toBePlaying(song);
+    let A1_UUID = __DataDictionary.insert_new( A1 );
+
+    Node.attemptConnectInput( 'numbers', A1_UUID );
+
+    let OUT_UUID = Node.outputs_['output'].entry_uuid;
+    Node.evaluate();
+
+    let OUT = __DataDictionary.get(OUT_UUID);
+
+    expect(OUT.data_).toEqual(1.1);
   });
 
-  describe("when song has been paused", function() {
-    beforeEach(function() {
-      player.play(song);
-      player.pause();
-    });
+  it("should take two floats and return the sum", function() {
+    let A1 = new ddEntry( 'number' );
+    A1.data_ = 1.1;
+    let A2 = new ddEntry( 'number' );
+    A2.data_ = 2.2;
 
-    it("should indicate that the song is currently paused", function() {
-      expect(player.isPlaying).toBeFalsy();
+    let A1_UUID = __DataDictionary.insert_new( A1 );
+    let A2_UUID = __DataDictionary.insert_new( A2 );
 
-      // demonstrates use of 'not' with a custom matcher
-      expect(player).not.toBePlaying(song);
-    });
+    Node.attemptConnectInput( 'numbers', A1_UUID );
+    Node.attemptConnectInput( 'numbers', A2_UUID );
 
-    it("should be possible to resume", function() {
-      player.resume();
-      expect(player.isPlaying).toBeTruthy();
-      expect(player.currentlyPlayingSong).toEqual(song);
-    });
+    let OUT_UUID = Node.outputs_['output'].entry_uuid;
+    Node.evaluate();
+
+    let OUT = __DataDictionary.get(OUT_UUID);
+
+    expect(OUT.data_).toEqual(1.1 + 2.2);
   });
 
-  // demonstrates use of spies to intercept and test method calls
-  it("tells the current song if the user has made it a favorite", function() {
-    spyOn(song, 'persistFavoriteStatus');
+  it("should take three floats and return the sum", function() {
+    let A1 = new ddEntry( 'number' );
+    A1.data_ = 1.1;
+    let A2 = new ddEntry( 'number' );
+    A2.data_ = 2.2;
+    let A3 = new ddEntry( 'number' );
+    A3.data_ = -3.0;
 
-    player.play(song);
-    player.makeFavorite();
+    let A1_UUID = __DataDictionary.insert_new( A1 );
+    let A2_UUID = __DataDictionary.insert_new( A2 );
+    let A3_UUID = __DataDictionary.insert_new( A3 );
 
-    expect(song.persistFavoriteStatus).toHaveBeenCalledWith(true);
-  });
+    Node.attemptConnectInput( 'numbers', A1_UUID );
+    Node.attemptConnectInput( 'numbers', A2_UUID );
+    Node.attemptConnectInput( 'numbers', A3_UUID );
 
-  //demonstrates use of expected exceptions
-  describe("#resume", function() {
-    it("should throw an exception if song is already playing", function() {
-      player.play(song);
+    let OUT_UUID = Node.outputs_['output'].entry_uuid;
+    Node.evaluate();
 
-      expect(function() {
-        player.resume();
-      }).toThrowError("song is already playing");
-    });
+    let OUT = __DataDictionary.get(OUT_UUID);
+
+    expect(OUT.data_).toEqual(1.1 + 2.2 + -3.0);
   });
 });

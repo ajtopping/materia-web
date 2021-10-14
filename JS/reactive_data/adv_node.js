@@ -43,8 +43,8 @@ class AdvNode {
   }
 
   createDataDictionaryOutputEntries_() {
-    for ( output in this.outputs_ ) {
-    	output.register();
+    for ( const output in this.outputs_ ) {
+    	this.outputs_[output].register();
     }
   }
 
