@@ -1,10 +1,9 @@
 ```
-NodeRunner
-This wrapper for AdvNode figures out how to break DataCollection(s) into 
-individual Input Sets that can be run against the AdvNode one or more times.
+NodeInputCollector
+Verifies the type of incoming connections
 ```
 
-class NodeRunner {
+class NodeInputCollector {
   type = 'none'
 
   node_ = null
